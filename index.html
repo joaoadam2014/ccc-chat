@@ -64,7 +64,7 @@
             const b2=document.getElementById("novoNick")
             let list1=document.getElementById("messages")
             let tempo=new Date
-            if (  tempo.getDay()==1){localStorage.setItem("Historico","chat Global")}
+            if (  tempo.getDay()==1){localStorage.setItem("Historico","chat Global, dados limpos")}
             const firebaseConfig = {
                     apiKey: "AIzaSyDb5gJmSrmeQ-T3EGhzAj-vIBNFigeF9Lc",
                     authDomain: "chatdatabank.firebaseapp.com",
@@ -80,6 +80,14 @@
             //const mensagemsref=ref(dataBase,"mensagens")
             if (localStorage.getItem("Historico")==null){localStorage.setItem("Historico","chat Global")}
             if (localStorage.getItem("Nick")==null){localStorage.setItem("Nick","Anonimo")}
+             if (  tempo.getHours()<=5){localStorage.setItem("Historico",localStorage.getItem("Historico")+"<br><br>"+"<b>"+"Joaoadam2014"+":</b><br>"+"vai dormir, pelo o amor de deus")}
+            if (  tempo.getMonth()==11){localStorage.setItem("Historico",localStorage.getItem("Historico")+"<br><br>"+"<b>"+"Joaoadam2014"+":</b><br>"+"FELIZ NATAL!!!!!")}
+            if (  tempo.getDay()==2){localStorage.setItem("Historico",localStorage.getItem("Historico")+"<br><br>"+"<b>"+"Joaoadam2014"+":</b><br>"+"Hoje é terça feira man")}
+            if (  tempo.getDay()==3){localStorage.setItem("Historico",localStorage.getItem("Historico")+"<br><br>"+"<b>"+"Joaoadam2014"+":</b><br>"+"cara, agora é quarta vei, meio de semana sempre assim")}
+            if (  tempo.getDay()==4){localStorage.setItem("Historico",localStorage.getItem("Historico")+"<br><br>"+"<b>"+"Joaoadam2014"+":</b><br>"+"é quinta feira atualmente cara")}
+            if (  tempo.getDay()==5){localStorage.setItem("Historico",localStorage.getItem("Historico")+"<br><br>"+"<b>"+"Joaoadam2014"+":</b><br>"+"hoje sextouuuu!!!!")}
+            if (  tempo.getDay()==6){localStorage.setItem("Historico",localStorage.getItem("Historico")+"<br><br>"+"<b>"+"Joaoadam2014"+":</b><br>"+"hoje é sabádo, fim de semana ótimo, vá a igreja.")}
+            if (  tempo.getDay()==0){localStorage.setItem("Historico",localStorage.getItem("Historico")+"<br><br>"+"<b>"+"Joaoadam2014"+":</b><br>"+"domingão brabo e tú não me responde")}
             list1.innerHTML=localStorage.getItem("Historico")
             let nick=localStorage.getItem("Nick")
             b1.onclick=function() {
