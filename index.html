@@ -57,8 +57,8 @@
         <button id="novoNick">confirmar apelido</button>
         <button id="enviar">Enviar</button>
         <script type="module">
-            import { initializeApp } from "https://esm.sh";
-            import { getDatabase, ref, push, onChildAdded } from "https://esm.sh";
+            //import { initializeApp } from "https://gstatic.com";
+            //import { getDatabase, ref, push, onChildAdded } from "https://gstatic.com";
 
             const b1=document.getElementById("enviar")
             const b2=document.getElementById("novoNick")
@@ -72,35 +72,37 @@
                     appId: "1:1022627351678:web:bf21f20df26019573fdc2f",
                     measurementId: "G-BTG44VDWV1"
             };
-            const app=initializeApp(firebaseConfig)
-            const dataBase=getDatabase(app)
-            const mensagemsref=ref(db,"mensagens")
+           // const app=initializeApp(firebaseConfig)
+            //const dataBase=getDatabase(app)
+            //const mensagemsref=ref(dataBase,"mensagens")
             if (localStorage.getItem("Nick")==null){localStorage.setItem("Nick","Anonimo")}
             let nick=localStorage.getItem("Nick")
             b1.onclick=function() {
                  let input=document.querySelectorAll("input")[0]
                  let list=document.getElementById("messages")
                  let message=input.value
-                 let revisar=message.toLowerCase().trim().replace(" ","")
-                 if (revisar.includes("porra") || revisar.includes("merda") || revisar.includes("gay")|| revisar.includes("cu") || revisar.includes("telefone") || revisar.includes("senha") || revisar.includes("fdp") || revisar.includes("kid") | revisar.includes("puta")){
+                 let revisar=message.toLowerCase().trim().replace(/\s/g,"")
+                 let textoAssinado= nick + ":\n" + message;
+                 if (revisar.includes("porra") || revisar.includes("merda") || revisar.includes("gay")|| revisar.includes("cu") || revisar.includes("telefone") || revisar.includes("senha") || revisar.includes("fdp") || revisar.includes("kid") || revisar.includes("puta")){
                     list.innerHTML=list.innerHTML+"<br><br>"+"<b>"+nick+":</b><br>"+String("#").repeat(revisar.length)
                  }else{
                     list.innerHTML=list.innerHTML+"<br><br>"+"<b>"+nick+":</b><br>"+message
-                    push(mensagemsref,{
-                        texto:"<br><br>"+"<b>"+nick+":</b><br>"+message
-                    })
+                    //push(mensagemsref,{
+                        //texto:textoAssinado
+                    //})
                  }
             }
             b2.onclick=function(){
                 let InsertNick=document.querySelectorAll("input")[1].value
+                nick=InsertNick
                 localStorage.setItem("Nick",InsertNick)
             }
-            onChildAdded(mensagemsref, (data) => {
-                let msg = data.val();
-                let list = document.getElementById("messages");
-                list.innerHTML = list.innerHTML + msg.texto; 
-                list.scrollTop = list.scrollHeight; 
-            });
+            //onChildAdded(mensagemsref, (data) => {
+                //let msg = data.val();
+                //let list = document.getElementById("messages");
+                //list.innerHTML = list.innerHTML + msg.texto; 
+                //list.scrollTop = list.scrollHeight; 
+            //});
         </script>
     </body>
 </html>
