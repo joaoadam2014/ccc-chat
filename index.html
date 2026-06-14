@@ -57,11 +57,14 @@
         <button id="novoNick">confirmar apelido</button>
         <button id="enviar">Enviar</button>
         <script type="module">
-            //import { initializeApp } from "https://gstatic.com";
-            //import { getDatabase, ref, push, onChildAdded } from "https://gstatic.com";
+            //import { initializeApp } from "https://unpkg.com";
+            //import { getDatabase, ref, push, onChildAdded } from "https://unpkg.com";
 
             const b1=document.getElementById("enviar")
             const b2=document.getElementById("novoNick")
+            let list1=document.getElementById("messages")
+            let tempo=new Date
+            if (  tempo.getDay()==1){localStorage.setItem("Historico","chat Global")}
             const firebaseConfig = {
                     apiKey: "AIzaSyDb5gJmSrmeQ-T3EGhzAj-vIBNFigeF9Lc",
                     authDomain: "chatdatabank.firebaseapp.com",
@@ -75,7 +78,9 @@
            // const app=initializeApp(firebaseConfig)
             //const dataBase=getDatabase(app)
             //const mensagemsref=ref(dataBase,"mensagens")
+            if (localStorage.getItem("Historico")==null){localStorage.setItem("Historico","chat Global")}
             if (localStorage.getItem("Nick")==null){localStorage.setItem("Nick","Anonimo")}
+            list1.innerHTML=localStorage.getItem("Historico")
             let nick=localStorage.getItem("Nick")
             b1.onclick=function() {
                  let input=document.querySelectorAll("input")[0]
@@ -87,6 +92,7 @@
                     list.innerHTML=list.innerHTML+"<br><br>"+"<b>"+nick+":</b><br>"+String("#").repeat(revisar.length)
                  }else{
                     list.innerHTML=list.innerHTML+"<br><br>"+"<b>"+nick+":</b><br>"+message
+                    localStorage.setItem("Historico",localStorage.getItem("Historico")+"<br><br>"+"<b>"+nick+":</b><br>"+message)
                     //push(mensagemsref,{
                         //texto:textoAssinado
                     //})
@@ -97,12 +103,13 @@
                 nick=InsertNick
                 localStorage.setItem("Nick",InsertNick)
             }
-            //onChildAdded(mensagemsref, (data) => {
+
+           // onChildAdded(mensagemsref, (data) => {
                 //let msg = data.val();
-                //let list = document.getElementById("messages");
+               // let list = document.getElementById("messages");
                 //list.innerHTML = list.innerHTML + msg.texto; 
                 //list.scrollTop = list.scrollHeight; 
-            //});
+           // });
         </script>
     </body>
 </html>
