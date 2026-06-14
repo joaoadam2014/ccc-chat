@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <style>
+            #say {
+                position: fixed;
+                left:40%;
+                top:60%;
+                scale: 2;
+                border:3px solid #333;
+                border-radius: 20px;
+                align-self: center;
+            }
+            #nickInsert {
+                position: fixed;
+                left:10%;
+                top:10%;
+                scale: 1.5;
+                border:3px solid #333;
+                border-radius: 20px;
+                align-self: center;
+            }
+            #enviar {
+                position: fixed;
+                left:30%;
+                top:60%;
+                scale: 2;
+                border:3px solid #333;
+                border-radius: 20px;
+                align-self: center;
+            }
+            #messages{
+                position: absolute;
+                left:30%;
+                top:10%;
+                scale: 1.25;
+                border:3px solid #333;
+                border-radius: 20px;
+                align-self: center;
+                min-height: 500px;
+                min-width: 500px;
+            }
+            #novoNick {
+                position: fixed;
+                left:15%;
+                top:10%;
+                scale: 1;
+                border:3px solid #333;
+                border-radius: 20px;
+                align-self: center;
+            }
+        </style>
+    </head>
+    <body>
+        <p id="messages">Chat global:<br> <br></p>
+        <input id="say"></input>
+        <input id="nickInsert"><b>Insira seu nick:</b></input>
+        <button id="novoNick">confirmar apelido</button>
+        <button id="enviar">Enviar</button>
+        <script type="module">
+            import { initializeApp } from "https://gstatic.com";
+            import { getDatabase, ref, push, onChildAdded } from "https://gstatic.com";
+
+            const b1=document.getElementById("enviar")
+            const b2=document.getElementById("novoNick")
+            const firebaseConfig = {
+                    apiKey: "AIzaSyDb5gJmSrmeQ-T3EGhzAj-vIBNFigeF9Lc",
+                    authDomain: "chatdatabank.firebaseapp.com",
+                    databaseURL: "https://chatdatabank-default-rtdb.firebaseio.com",
+                    projectId: "chatdatabank",
+                    storageBucket: "chatdatabank.firebasestorage.app",
+                    messagingSenderId: "1022627351678",
+                    appId: "1:1022627351678:web:bf21f20df26019573fdc2f",
+                    measurementId: "G-BTG44VDWV1"
+            };
+            const app=initializeApp(firebaseConfig)
+            const dataBase=getDatabase(app)
+            const mensagemsref=ref(db,"mensagens")
+            if (localStorage.getItem("Nick")==null){localStorage.setItem("Nick","Anonimo")}
+            let nick=localStorage.getItem("Nick")
+            b1.onclick=function() {
+                 let input=document.querySelectorAll("input")[0]
+                 let list=document.getElementById("messages")
+                 let message=input.value
+                 let revisar=message.toLowerCase().trim().replace(" ","")
+                 if (revisar.includes("porra") || revisar.includes("merda") || revisar.includes("gay")|| revisar.includes("cu") || revisar.includes("telefone") || revisar.includes("senha") || revisar.includes("fdp") || revisar.includes("kid") | revisar.includes("puta")){
+                    list.innerHTML=list.innerHTML+"<br><br>"+"<b>"+nick+":</b><br>"+String("#").repeat(revisar.length)
+                 }else{
+                    list.innerHTML=list.innerHTML+"<br><br>"+"<b>"+nick+":</b><br>"+message
+                    push(mensagemsref,{
+                        texto:"<br><br>"+"<b>"+nick+":</b><br>"+message
+                    })
+                 }
+            }
+            b2.onclick=function(){
+                let InsertNick=document.querySelectorAll("input")[1].value
+                localStorage.setItem("Nick",InsertNick)
+            }
+            onChildAdded(mensagemsref, (data) => {
+                let msg = data.val();
+                let list = document.getElementById("messages");
+                list.innerHTML = list.innerHTML + msg.texto; 
+                list.scrollTop = list.scrollHeight; 
+            });
+        </script>
+    </body>
+</html>
